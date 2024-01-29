@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+    Layout = "_AdminLayout";
+    
+}
+@model List<Microsoft.AspNetCore.Identity.IdentityUser>
+@using Microsoft.AspNetCore.Identity
+<br />
+<h2>Users List</h2>
+<br /><br />
+<table  class="table m-5">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.PhoneNumber</td>
+            </tr>
+            
+        }
+    </tbody>
+</table> 

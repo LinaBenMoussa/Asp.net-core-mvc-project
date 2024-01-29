@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<script>
+    setTimeout(function () {
+        var successMessage = document.getElementById('successMessage');
+        if (successMessage) {
+            successMessage.style.display = 'none';
+        }
+    }, 5000); 
+</script>
+@if (ViewData["Success"] != null)
+{
+    <div id="successMessage" class="alert alert-success" role="alert">
+        @ViewData["Success"]
+    </div>
+}
+<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="2500">
+            <img src="~/images/Welcome/Design sans titre (1).png" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="2500">
+            <img src="~/images/Welcome/Design sans titre (2).png" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="2000">
+            <img src="~/images/Welcome/Design sans titre (3).png" class="d-block w-100" alt="...">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<br /><br />
+<h1>Destinations</h1>
+@model List<Destination> ;
+
+    <br /><br />
+
+<div class="container">
+    <div class="row">
+        @foreach (var destination in Model.Take(2))
+        {
+            <div class="col-md-6" style="margin-bottom: 20px; position: relative;">
+                <div class="card text-bg-dark">
+                    <a href="~/Hotels/destinationHotel?pays=@destination.Nom&priceRange=&priceRange1=">
+                        <img src="images/destinations/@destination.Image" class="card-img" alt="..." style="width: 100%; height: 300px;">
+                        <div class="card-img-overlay">
+                            <h5 class="card-title">@destination.Nom</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row">
+        @foreach (var destination in Model.Skip(2))
+        {
+            <div class="col-md-4" style="margin-bottom: 20px; position: relative;">
+                <div class="card text-bg-dark">
+                    <a href="~/Hotels/destinationHotel?pays=@destination.Nom&priceRange=&priceRange1=">
+                        <img src="images/destinations/@destination.Image" class="card-img" alt="..." style="width: 100%; height: 300px;">
+                        <div class="card-img-overlay">
+                            <h5 class="card-title">@destination.Nom</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

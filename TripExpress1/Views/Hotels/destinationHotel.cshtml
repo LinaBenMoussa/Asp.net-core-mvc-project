@@ -1,0 +1,182 @@
+﻿@using TripExpress.ViewModels;
+@model destinationHotelViewData;
+
+@section scripts {
+    <script>
+        function openModal(hotelId) {
+            $('#hotelIdInput').val(hotelId);
+          
+        }
+    </script>
+
+
+
+    <script>
+        $(function () {
+            $("#datepicker").datepicker();
+            $("#datepicker1").datepicker();
+        });
+    </script>
+    <script>
+
+        $(function () {
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 500,
+                values: [75, 300],
+                slide: function (event, ui) {
+                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                    $("#priceRange").val(ui.values[0] + "-" + ui.values[1]);
+                }
+            });
+
+        });
+    </script>
+    <script>
+        $(function () {
+            $("#slider-range1").slider({
+                range: true,
+                min: 0,
+                max: 500,
+                values: [75, 300],
+                slide: function (event, ui) {
+                    $("#amount1").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                    $("#priceRange1").val(ui.values[0] + "-" + ui.values[1]);
+                }
+            });
+
+        });
+
+    </script>
+
+}
+<style>
+    .etoile{color:yellow;
+        font-size:20px;
+        
+    }
+</style>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-md-3" style="background-color: #f8f9fa; border: 1px solid #ccc; padding: 10px; height: 100%;">
+            <form asp-action="destinationHotel" method="get">
+                <h5>Filter by:</h5>
+
+                <div class="form-group">
+                    <label for="pays">Pays</label>
+                    <select class="form-control" id="pays" name="pays">
+                        <option id="Select Destination">Select Destination</option>
+                        @foreach (var e in Model.Destinations)
+                        {
+                            <option id="@e.Nom">@e.Nom</option>
+                        }
+                    </select>
+                </div>
+
+                <div>
+                    <label for="amount">Price Min:</label>
+                    <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                </div>
+
+                <div id="slider-range"></div>
+                <br />
+                <div>
+                    <label for="amount1">Price Max:</label>
+                    <input type="text" id="amount1" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                    <input type="hidden" id="priceRange1" name="priceRange1" />
+                </div>
+
+                <div id="slider-range1"></div>
+                <br />
+
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </form>
+        </div>
+
+        <div class="col-md-9" style="border: 1px solid #ccc; padding: 10px;">
+            @if (Model.Hotels == null)
+            {
+                <p>Aucun hôtel trouvé.</p>
+            }
+            else
+            {
+                foreach (var e in Model.Hotels)
+                {
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="~/images/hotels/@e.Img" class="img-fluid rounded-start" alt="..." style="width: 100%; height: 100%;">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body pl-5 text-center">
+                                    <h5 class="card-title">@e.Nom</h5>
+                                    <p class="card-text">Pays : @e.Localisation</p>
+                                    <p class="card-text">Prix : @e.PrixMin €_@e.PrixMax €</p>
+                                    <p class="card-text"><small class="text-body-secondary">Classement : @e.Classement <span class="etoile">☆</span></small></p>
+                                    <table>
+                                    <tr>
+                                        <td><a asp-action="HotelDescription" asp-route-id="@e.IdHotel" class="btn btn-info">More Details</a></td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="openModal(@e.IdHotel)">
+                                                See availability
+                                            </button>
+                                        </td>
+                                        
+                                    </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <form asp-controller="Room" asp-action="RoomDispo" method="get">
+                                <div class="modal" tabindex="-1" id="myModal" onload="Page_Load">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Modal title</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="container text-center">
+                                                    <div class="row align-items-center">
+                                                        <div class="col">
+                                                            <label>Check-in:</label>
+                                                        </div>
+                                                        <div class="col">
+                                                            <input required type="text" id="datepicker" name="datepicker" class="form-control col-10">
+                                                        </div>
+                                                        <div class="col">
+                                                            <label>Check-out:</label>
+                                                        </div>
+                                                        <div class="col">
+                                                            <input required type="text" id="datepicker1" name="datepicker1" class="form-control col-10">
+                                                        </div>
+                                                        <input type="hidden" id="hotelIdInput" name="hotelId" value=""/>
+                                                        <div class="col">
+                                                            <label>Type</label>
+                                                        </div>
+                                                        <div class="col">
+                                                            <select id="type" name="typeSelector" class="form-control col-10">
+                                                                <option>Single</option>
+                                                                <option>Double</option>
+                                                                <option>Triple</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
+                                                <button type="submit" class="btn btn-primary" id="searchButton">Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

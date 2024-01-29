@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+    Layout = "_AdminLayout";
+}
+
+<h1>@ViewData["user"]</h1>
+<div class="m-4">
+    <!-- Centrer le contenu -->
+    <br />
+    <br />
+    <style>
+        h2 {
+            color: orangered;
+        }
+
+        img {
+            height: 200px;
+            width: 200px;
+            object-fit: cover; /* Ajustez cela en fonction de vos besoins */
+        }
+
+        .image-container {
+            position: relative;
+        }
+
+            .image-container:hover img {
+                transform: scale(1.2); /* Ajustez la valeur selon vos besoins */
+                transition: transform 0.3s ease; /* Ajoute une transition fluide */
+            }
+
+        h1 {
+            color: orangered;
+        }
+    </style>
+
+    <table m-5>
+        <tr>
+            <td>
+                <div class="image-container m-2">
+                    <img src="~/images/dashboard/destination.jpg" alt="Image">
+                    <div class="position-absolute top-50 start-0">
+                        <h2>@ViewData["destination"] Destination</h2>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="image-container m-2">
+                    <img src="~/images/dashboard/hotels.png" alt="Image">
+                    <div class="position-absolute top-50 start-0">
+                        <h2>@ViewData["hotels"] Hotel</h2>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="image-container m-2">
+                    <img src="~/images/dashboard/room.png" alt="Image">
+                    <div class="position-absolute top-50 start-0">
+                        <h2>@ViewData["rooms"] Room</h2>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="image-container m-2">
+                    <img src="~/images/dashboard/avis.jpg" alt="Image">
+                    <div class="position-absolute top-50 start-0">
+                        <h2>@ViewData["avis"] Avis</h2>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="image-container m-2">
+                    <img src="~/images/dashboard/users.png" alt="Image">
+                    <div class="position-absolute top-50 start-0">
+                        <h2>@ViewData["users"] User</h2>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+

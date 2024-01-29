@@ -1,0 +1,81 @@
+﻿
+@*//adminLayout*@
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - TripExpress</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+        @*    <link href="c:\users\lenovo\.nuget\packages\bootstrap\5.3.2\contentfiles\any\any\wwwroot\css\bootstrap.min.css" rel="stylesheet" />
+        *@
+        <link href="~/lib/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/css/StyleSheet3.css" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/TripExpress.styles.css" asp-append-version="true" />
+    </head>
+    <br /> 
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+   Menu
+</button>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h1> <a  class="title" asp-controller="Admin" asp-action="Index">TripExpress</a></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div>
+            <a asp-controller="User" asp-action="ListUser">Users</a>
+        </div>
+        <div>
+            <a asp-controller="Admin" asp-action="ListAdmins">Admins</a>
+        </div>
+        <div>
+            <a asp-controller="Destination" asp-action="DestinationList">Destination</a>
+        </div>
+        <div>
+            <a asp-controller="Hotels" asp-action="HotelsList">Hotels</a>
+        </div>
+        <div>
+            <a asp-controller="image" asp-action="showImages">Images</a>
+        </div>
+        <div>
+            <a asp-controller="avis" asp-action="AvisList">Comments</a>
+        </div>
+        <div>
+            <a asp-controller="ReservationRoom" asp-action="ReservationRoomList">All Rooms Reservation</a>
+        </div>
+        
+    </div>
+    
+    
+        <div>
+            <a asp-controller="Admin" asp-action="RegisterAdmin">Add Admin</a><br />
+        </div>
+    
+
+   @* <a asp-controller="Admin" asp-action="RegisterAdmin">Register</a><br />
+    <a asp-controller="Admin" asp-action="LoginAdmin">Login</a>*@
+    <br />
+</div>
+@RenderBody()
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
+
+@* end adminLayout*@

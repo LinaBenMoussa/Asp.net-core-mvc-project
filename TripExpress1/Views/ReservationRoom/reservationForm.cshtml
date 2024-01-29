@@ -1,0 +1,156 @@
+﻿
+
+    <title>How To Disable Specific Dates In jQuery Datepicker</title>
+    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style type="text/css">
+        
+
+        input {
+            padding: 5px;
+            background-color: #eeeeee;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 100px;
+            font-weight: 600;
+        }
+
+        /* Style pour les dates désactivées */
+        .ui-state-disabled {
+            color: red !important;
+        }
+    </style>
+
+@{
+    ViewData["Title"] = "Add Destination";
+    Layout = "_AdminLayout";
+}
+
+<script>
+    function toggleRoomInput() {
+        var hotelSelect = document.getElementById('hotelSelect');
+        var roomInput = document.getElementById('roomInput');
+        var selectedHotelId = hotelSelect.value;
+
+        if (selectedHotelId) {
+            $.ajax({
+                url: "/Room/GetByHotel?hotelId=" + selectedHotelId, // Utilisez selectedHotelId ici
+                data: { hotelId: selectedHotelId },
+                success: function (data) {
+                    console.log(data);
+                    var roomSelect = roomInput.getElementsByTagName("select")[0];
+                    roomSelect.innerHTML = ""; // Clear existing options
+
+                    if (data.length === 0) {
+                        // Handle empty response
+                        roomInput.style.display = 'block';
+                        var option = document.createElement("option");
+                        option.value = ""; // Vous pouvez définir la valeur selon vos besoins
+                        option.textContent = "No rooms found for this hotel.";
+                        roomSelect.appendChild(option);
+                    } else {
+                        // Add fetched data to the dropdown
+                        for (var i = 0; i < data.length; i++) {
+                            var option = document.createElement("option");
+                            option.value = data[i].idRoom; // Utilisez la propriété idRoom comme valeur
+                            option.textContent = data[i].type + "|" + data[i].prixRoom + "|" + data[i].nbpersonne; // Utilisez la propriété type comme texte
+                            roomSelect.appendChild(option);
+                        }
+                        roomInput.style.display = 'block';
+                    }
+                },
+
+                error: function () {
+                    // Display user-friendly error message
+                    alert("Error fetching rooms. Please try again later.");
+                }
+            });
+        } else {
+            roomInput.style.display = 'none';
+        }
+    }
+
+    // Add room selection validation before form submission
+    $('#AddReservation').submit(function (e) {
+        if (!$('#roomInput').find('select').val()) {
+            e.preventDefault();
+            // Display error message or highlight required field
+            alert("Please select a room.");
+        }
+    });
+</script>
+<script>
+    $(function () {
+        $("#datepicker").datepicker();
+        $("#datepicker1").datepicker();
+    });
+</script>
+<br />
+
+<br />
+<div class="position-absolute top-50 start-50 translate-middle">
+    <h1>Add Reservation</h1>
+    <br />
+    <form id="AddReservation" asp-controller="DateRoom" asp-action="verifyReservationDate" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label>User Name</label><br />
+            <select class="col" name="user">
+                @foreach (var user in Model)
+                {
+                    <option>@user.UserName</option>
+                }
+            </select>
+        </div>
+        <br />
+        <div class="form-group">
+            <label>Hotel</label><br />
+            <select class="col" required name="hotel" id="hotelSelect" onchange="toggleRoomInput()">
+                <option >Select Hotel</option>
+                @foreach (var hotel in (List<Hotel>)ViewData["hotels"])
+                {
+                    <option value="@hotel.IdHotel">@hotel.Nom</option>
+                }
+            </select>
+        </div> <br />
+
+        <div class="form-group" id="roomInput" style="display: none;" >
+            <label>Room</label><br />
+            <select class="col" required id="roomselect" onchange="toggleDateInput()" name="room"></select><br />
+            <br />
+        </div>
+        <div class="col">
+            <label>Check-in:</label>
+        </div>
+        <div class="col">
+            <input required type="text" id="datepicker" name="deb" class="form-control col-10">
+        </div>
+        <div class="col">
+            <label>Check-out:</label>
+        </div>
+        <div class="col">
+            <input required type="text" id="datepicker1" name="fin" class="form-control col-10">
+        </div>
+       
+        <div class="form-group" >
+            <label>Number of Rooms</label><br />
+            <select name="nbroom">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+
+        </div>
+        <br /><br />
+        <input value="Reserve" type="submit" class="btn btn-primary">
+    </form>
+</div>
+
+
+

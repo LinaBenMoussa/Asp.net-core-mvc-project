@@ -1,0 +1,52 @@
+﻿@using TripExpress.ViewModels;
+@{
+    ViewData["Title"] = "Admin";
+    Layout = "_AdminLayout";
+    
+}
+
+@model RateAvis
+<style>
+    .sapn{color:yellow}
+</style>
+
+
+<div class="container">
+    <h1>Comments And Rate: @Model.hotel</h1>
+    <h2>Rating : @Model.rate <span class="sapn">☆</span></h2>
+    <br />
+
+
+
+    <table class="table-responsive m-3">
+        <thead>
+            <tr>
+                <th class="p-4" scope="col">Comment</th>
+                <th class="p-4" scope="col">User Name</th>
+               
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in Model.comment)
+            {
+                <form>
+                <tr>
+                    <td class="p-4">@d.comment</td>
+                    <td class="p-4">@d.UserName</td>
+
+
+                </tr>
+                </form>
+            }
+        </tbody>
+    </table>
+   
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+}

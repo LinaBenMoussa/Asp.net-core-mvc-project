@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+    Layout = "_AdminLayout";
+    //Pager pager = new Pager();
+    ////int PagerNo = 0;
+    ////if (ViewBag.Pager != null)
+    ////{
+    ////    pager = ViewBag.pager;
+    ////    PagerNo = pager.CurrentPage;
+    ////}
+}
+
+@model List<Comment>
+
+
+
+<div class="container">
+    <h1>All Comments</h1>
+    <br />
+    <table class="table-responsive m-3">
+        <thead>
+            <tr>
+                <th class="p-4" scope="col">Comment</th>
+                <th class="p-4" scope="col">User Name</th>
+                <th class="p-4">Hotel</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in Model)
+            {
+                <form>
+                <tr>
+                    <td class="p-4">@d.comment</td>
+                    <td class="p-4">@d.UserName</td>
+                    <td class="p-4">@d.Hotel.Nom</td>
+                    <td class="p-2 row-cols-1">
+                        <input type="submit" asp-action="remove" asp-route-id="@d.idComment" class="btn btn-danger" value="Remove">
+                    </td>
+
+
+                </tr>
+                </form>
+            }
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (var pge = ViewBag.pager.StartPage; pge <= ViewBag.pager.EndPage; pge++)
+            {
+                <li class="page-item @(pge == ViewBag.pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="avis" asp-action="AvisList" asp-route-pg="@pge">@pge</a>
+                </li>
+            }
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+}

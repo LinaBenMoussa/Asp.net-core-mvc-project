@@ -1,0 +1,107 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+    Layout = "_AdminLayout";
+    //Pager pager = new Pager();
+    //int PagerNo = 0;
+    //if (ViewBag.Pager != null)
+    //{
+    //    pager = ViewBag.pager;
+    //    PagerNo = pager.CurrentPage;
+    //}
+}
+
+@model List<Hotel>
+
+
+
+<div class="container">
+    <h1>Hotels List</h1>
+    <br />
+    <form asp-action="SearchHotel">
+        <input name="search" type="search" class="form-control" placeholder="Search Hotel" /><br />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <div class="position-absolute top-10 end-0">
+        <a asp-action="AddHotel" class="btn btn-primary">Add Hotel</a>
+
+    </div>
+    <table class="table-responsive m-3">
+        <thead>
+            <tr>
+                <th class="p-4" scope="col"></th>
+                <th class="p-4" scope="col">Name</th>
+                <th class="p-4" scope="col">Type</th>
+                <th class="p-4" scope="col">Classement</th>
+                <th class="p-4" scope="col">Price Range</th>
+
+                <th class="p-4">Destination</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in Model)
+            {
+                <form>
+                <tr>
+                    <td class="p-4"><img src="~/images/hotels/@d.Img" height="100px" width="100px" /></td>
+                    <td class="p-4">@d.Nom</td>
+                    <td class="p-4">@d.Type</td>
+                    <td class="p-4">@d.Classement</td>
+
+                    <td class="p-4">@d.PrixMin€-@d.PrixMax€</td>
+                    
+                     
+                      <td class="p-4">@d.Destination.Nom</td>
+
+
+
+
+                    <td class="p-2 row-cols-1">
+                        <input type="submit" value="Edit" asp-action="EditHotelForm1" asp-route-id="@d.IdHotel" class="btn btn-warning">
+                    </td>
+
+                    <td class="p-2 row-cols-1">
+                        <input type="submit" asp-action="RemoveHotel" asp-route-id="@d.IdHotel" class="btn btn-danger" value="Remove"></td>
+
+
+                    <td class="p-2 row-cols-1">
+                        <input type="submit" asp-controller="Room" asp-action="ShowRoom" asp-route-id="@d.IdHotel" value="Show Room" class="btn btn-info">
+                            
+                    </td>
+                    <td class="p-2 row-cols-1">
+                        <input type="submit" asp-action="showRateAvis" asp-route-id="@d.IdHotel" value="Show Comment And Rate" class="btn btn-info">
+
+                    </td>
+                </tr>
+                </form>
+            }
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (var pge = ViewBag.pager.StartPage; pge <= ViewBag.pager.EndPage; pge++)
+            {
+                <li class="page-item @(pge == ViewBag.pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Hotels" asp-action="HotelsList" asp-route-pg="@pge">@pge</a>
+                </li>
+            }
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+}

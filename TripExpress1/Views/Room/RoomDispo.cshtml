@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "RoomDispo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model RoomModel;
+@if (Model != null)
+{
+    <br />
+    <br />
+    <br />
+    <form asp-controller="ReservationRoom" asp-action="Index" method="get">
+        <input type="hidden" name="dateDeb" value="@ViewData["dateDeb"]">
+        <input type="hidden" name="dateFin" value="@ViewData["dateFin"]">
+
+        <input type="hidden" name="idRoom" value="@Model.IdRoom">
+        <input type="hidden" name="idHotel" value="@ViewData["IdHotel"]">
+    <table class="table orange-yellow-table table-striped">
+        <thead>
+            <tr>
+                 <th scope="col">Hotel Name</th>
+                <th scope="col">Room Type</th>
+                <th scope="col">Number of guests</th>
+                <th scope="col">Today's Price</th>
+                <th scope="col">Select Rooms</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td scope="row">@ViewData["nomHotel"]</td>
+                <td scope="row">@ViewData["type"]</td>
+                <td>@Model.Nbpersonne</td>
+                <td>@Model.prixRoom €</td>
+                <td>
+                    <select name="nbRoom">                   
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="offset-lg-9">
+    <button type="button" class="btn btn-warning ">Cancel</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Reserve
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-body">
+                            Remove Room ??
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary ">Reserve</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  </form>
+
+
+}else{<br /><br />
+<h1>Pas De Room Disponible</h1>}
+
+

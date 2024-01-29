@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+    Layout = "_AdminLayout";}
+<script>
+    const fileInput = document.getElementById('img');
+    const previewImage = document.getElementById('previewImage');
+
+    fileInput.addEventListener('change', handleFileSelect);
+
+    function handleFileSelect(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                previewImage.innerHTML = `<img height="100px" width="100px" src="${reader.result}" alt="${file.name}" />`;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+@model List<Hotel>
+<form asp-action="addImage" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    
+    <div class="form-group">
+        <label>Hotel</label><br />
+        <select name="hotel">
+            @foreach (var d in Model)
+            {
+                <option>@d.Nom</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <br /> <label>Image</label><br />
+        <input id="img" class="form-control" name="img" type="file" value="" /><br />
+    </div>
+    <br /><br />
+    <div id="previewImage"></div><br />
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>

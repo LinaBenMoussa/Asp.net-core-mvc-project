@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+    Layout = "_AdminLayout";
+
+}
+@model List<Microsoft.AspNetCore.Identity.IdentityUser>
+@using Microsoft.AspNetCore.Identity
+<br />
+<h2>Admins List</h2>
+<br />
+<br />
+<div class="position-absolute top-10 end-0">
+    <a asp-action="RegisterAdmin" class="btn btn-primary">Add Admin</a>
+
+</div>
+<table class="table m-5">
+    <thead>
+        <tr>
+           
+            <th>Email</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+               
+                <td>@user.Email</td>
+                <td> <a type="submit" asp-action="remove" asp-route-id="@user.Id" class="btn btn-danger">Remove</a></td>
+               
+            </tr>
+
+        }
+    </tbody>
+</table>

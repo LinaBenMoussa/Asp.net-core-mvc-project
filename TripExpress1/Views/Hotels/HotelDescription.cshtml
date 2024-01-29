@@ -1,0 +1,249 @@
+﻿@model Hotel
+<head>
+    <link href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+    
+</head>
+<style>
+    .allrates{
+        color:gray;
+    }
+    .mr-2 {
+        padding:2px;
+    color:orangered}
+    body {
+        background-color: #eee;
+    }
+
+    .bdge {
+        height: 21px;
+        background-color: orange;
+        color: #fff;
+        font-size: 11px;
+        padding: 8px;
+        border-radius: 4px;
+        line-height: 3px;
+    }
+
+    .comments {
+        text-decoration: underline;
+        text-underline-position: under;
+        cursor: pointer;
+    }
+
+    .dot {
+        height: 7px;
+        width: 7px;
+        margin-top: 3px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .hit-voting:hover {
+        color: blue;
+    }
+
+    .hit-voting {
+        cursor: pointer;
+    }
+    .rate {
+        border-bottom-right-radius: 12px;
+        border-bottom-left-radius: 12px;
+    }
+
+
+
+    .rating {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center
+    }
+
+        .rating > input {
+            display: none
+        }
+
+        .rating > label {
+            position: relative;
+            width: 1em;
+            font-size: 30px;
+            font-weight: 300;
+            color: #FFD600;
+            cursor: pointer
+        }
+
+            .rating > label::before {
+                content: "\2605";
+                position: absolute;
+                opacity: 0
+            }
+
+            .rating > label:hover:before,
+            .rating > label:hover ~ label:before {
+                opacity: 1 !important
+            }
+
+        .rating > input:checked ~ label:before {
+            opacity: 1
+        }
+
+        .rating:hover > input:checked ~ label:before {
+            opacity: 0.4
+        }
+
+    .rating-submit {
+        border-radius: 15px;
+        color: #fff;
+        height: 49px;
+    }
+
+
+        .rating-submit:hover {
+            color: #fff;
+        }
+</style>
+@*<script>
+    const rating = document.querySelector(".rating");
+
+    const stars = rating.querySelectorAll(".bi");
+
+    const selectedStars = [];
+
+    for (const star of stars) {
+        star.addEventListener("click", () => {
+            if (star.classList.contains("bi-star-fill")) {
+                star.classList.remove("bi-star-fill");
+                selectedStars.pop();
+            } else {
+                star.classList.add("bi-star-fill");
+                selectedStars.push(star);
+            }
+        });
+    }
+
+    const getRating = () => {
+        return selectedStars.length;
+    };
+
+
+</script>*@
+<br><br />
+<h1>@Model.Nom</h1>
+<table>
+<tr>
+    
+    <td><img  height="30px" src="~/geo-alt.svg" /></td>
+    <td><h5>@Model.Adresse</h5></td>
+    </tr>
+</table>
+<!-- Gallery -->
+<div class="row">
+    <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+        @foreach(var h in  (List<Image>)ViewData["image1"])
+            {
+            <img src="~/images/hotels/@h.name" height="350px" width="100px"
+             class="w-100 shadow-1-strong rounded mb-4"
+             alt="Boat on Calm Water" />
+            }
+        
+    </div>
+
+    <div class="col-lg-4 mb-4 mb-lg-0">
+        @foreach (var h in (List<Image>)ViewData["image2"]){
+
+            <img src="~/images/hotels/@h.name" height="425px" width="100px"
+            class="w-100 shadow-1-strong rounded mb-4"
+                 alt="Mountains in the Clouds" />
+        }
+ @foreach (var h in (List<Image>)ViewData["image3"]){
+            <img src="~/images/hotels/@h.name"
+            class="w-100 shadow-1-strong rounded mb-4"
+             alt="Boat on Calm Water" />}
+    </div>
+
+    <div class="col-lg-4 mb-4 mb-lg-0">
+         @foreach (var h in (List<Image>)ViewData["image4"]){
+
+            <img src="~/images/hotels/@h.name" height="350px" width="100px"
+             class="w-100 shadow-1-strong rounded mb-4"
+             alt="Waves at Sea" />}
+
+    </div>
+</div>
+<table>
+    <tr>
+       
+        <td> 
+               @ViewData["rating"]
+            
+        </td>
+
+        <td> <span class="allrates">☆</span></td>
+    </tr>
+</table>
+
+<form asp-action="rating" asp-controller="Rating" asp-route-id="@Model.IdHotel" method="post">
+    <table>
+        <tr>
+            <td>
+    <div class="rating">
+       
+                <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+           
+    </div>
+            </td>
+        
+        <td><input type="submit" value="Submit" class="btn btn-primary rating-submit" /></td>
+        </tr>
+    </table>
+</form>
+
+<br />
+<p>@Model.description</p>
+
+<!-- Gallery -->
+
+@*comments*@
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="d-flex flex-column col-md-8">
+           
+            <div class="coment-bottom bg-white p-2 px-4">
+                <form asp-controller="Comment" asp-action="addComment" asp-route-id="@Model.IdHotel" method="post">
+                <div class="d-flex flex-row add-comment-section mt-4 mb-4"><input name="comment" type="text" class="form-control mr-3" placeholder="Add comment">
+                        <input class="btn btn-primary" value="Comment" type="submit">
+                    </div>
+                </form>
+                <div class="commented-section mt-2">
+                @foreach(var c in (List<Comment>)ViewData["comment"]){
+               
+                    <div class="d-flex flex-row align-items-center commented-user">
+                        <h5 class="mr-2">@c.UserName</h5><span class="dot mb-1"></span><span class="mb-1 ml-2"> @c.CreatedAt</span>
+                    </div>
+                    <div class="comment-text-sm"><span>@c.comment</span></div>
+                    
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/leaflet/leaflet.js"></script>
+<script src="~/lib/leaflet/leaflet.min.js"></script>
+
+<div id="map" style="width:100%;height:400px"></div>
+<script>
+    var map=L.map('map').setView([32.0213,35.0],13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var jsModel=@Html.Raw(Json.Serialize(Model));
+    console.log(jsModel);
+
+    L.marker([jsModel.lat, jsModel.long]).addTo(map)
+            .bindPopup(jsModel.nom+'<br>'+jsModel.adresse)
+            .openPopup();
+           
+    
+</script>

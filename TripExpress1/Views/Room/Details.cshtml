@@ -1,0 +1,44 @@
+﻿@*@model TripExpress.Models.RoomModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Home/Index.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>RoomModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateDebut)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateDebut)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateFin)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateFin)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prixRoom)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prixRoom)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nbpersonne)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nbpersonne)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdRoom">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+*@

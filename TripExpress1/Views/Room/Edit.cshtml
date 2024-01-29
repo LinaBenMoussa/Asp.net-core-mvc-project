@@ -1,0 +1,48 @@
+﻿@*@model TripExpress.Models.RoomModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Home/Index.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>RoomModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdRoom" />
+            <div class="form-group">
+                <label asp-for="DateDebut" class="control-label"></label>
+                <input asp-for="DateDebut" class="form-control" />
+                <span asp-validation-for="DateDebut" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateFin" class="control-label"></label>
+                <input asp-for="DateFin" class="form-control" />
+                <span asp-validation-for="DateFin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prixRoom" class="control-label"></label>
+                <input asp-for="prixRoom" class="form-control" />
+                <span asp-validation-for="prixRoom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nbpersonne" class="control-label"></label>
+                <input asp-for="Nbpersonne" class="form-control" />
+                <span asp-validation-for="Nbpersonne" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+*@

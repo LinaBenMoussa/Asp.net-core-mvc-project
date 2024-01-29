@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Add Destination";
+    Layout = "_AdminLayout";
+
+}
+
+@model Hotel
+<br />
+<h1>Add Hotel</h1>
+<div class="position-absolute top-0 start-50 translate-middle-x">
+    <br />
+
+    
+    
+    <form asp-action="EditHotel" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label>Name</label>
+            <input value="@Model.Nom" class="form-control" name="Nom" type="text" />
+        </div><br />
+
+        <div class="form-group">
+            <label>Localisation</label>
+            <input value="@Model.Localisation" class="form-control" name="localisation" type="text" />
+        </div><br />
+
+        <div class="form-group">
+            <label>Type</label>
+            <input class="form-control" value="@Model.Type" name="type" type="text" />
+        </div><br />
+        <div class="form-group">
+            <label>ranking</label>
+            <input value="@Model.Classement" class="form-control" name="classement" type="text" />
+        </div><br />
+        <div class="form-group">
+            <label>Address</label>
+            <input value="@Model.Adresse" class="form-control" name="adresse" type="text" />
+        </div><br />
+        <div class="form-group">
+            <label>Min Price</label>
+            <input value="@Model.PrixMin" class="form-control" name="prixmin" type="text" />
+        </div><br />
+        <div class="form-group">
+            <label>Max Price</label>
+            <input value="@Model.PrixMax" class="form-control" name="prixmax" type="text" />
+        </div><br />
+        <input value="@Model.IdHotel" class="form-control" name="id" type="hidden" />
+
+        <div class="form-group">
+            <br /> <label>Image</label><br />
+            <input id="img" class="form-control" name="image" type="file" value="@Model.Img" /><br />
+            <img height="100px" width="100px" id="previewImage" src="~/images/hotels/@Model.Img" />
+
+        </div>
+        <br /><br />
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>
+<script>
+    const fileInput = document.getElementById('img');
+    const previewImage = document.getElementById('previewImage');
+
+
+    fileInput.addEventListener('change', handleFileSelect);
+
+    function handleFileSelect(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                previewImage.src = reader.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+</script>

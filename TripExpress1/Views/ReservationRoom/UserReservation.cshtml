@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+    Layout = "_Layout";
+    //Pager pager = new Pager();
+    //int PagerNo = 0;
+    //if (ViewBag.Pager != null)
+    //{
+    //    pager = ViewBag.pager;
+    //    PagerNo = pager.CurrentPage;
+    //}
+}
+
+@model List<ReservationRoom>
+
+<div class="container">
+    <h1>My Reservation</h1>
+   
+    <br />
+    <table class="table-responsive m-3">
+        <thead>
+            <tr>
+                <th class="p-4" scope="col">Hotel Name</th>
+                <th class="p-4" scope="col">Room Type</th>
+            
+                <th class="p-4" scope="col">Room Price</th>
+
+                <th class="p-4">Nb Room</th>
+                <th class="p-4">Start date</th>
+                <th class="p-4">End date</th>
+
+                <th>Total </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in Model)
+            {
+                <form>
+                <tr>
+                    <td class="p-4">@d.Hotel.Nom</td>
+                    <td class="p-4">@d.Room.Type</td>
+                    <td class="p-4">@d.Room.prixRoom</td>
+                    <td class="p-4">@d.nbRoom</td>
+                    <td class="p-4">@d.dateDebut</td>
+                    <td class="p-4">@d.dateFin</td>
+                    <td class="p-4">@(d.nbRoom * @d.Room.prixRoom)</td>
+                   
+                </tr>
+                </form>
+            }
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (var pge = ViewBag.pager.StartPage; pge <= ViewBag.pager.EndPage; pge++)
+            {
+                <li class="page-item @(pge == ViewBag.pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="ReservationRoom" asp-action="UserReservation" asp-route-pg="@pge">@pge</a>
+                </li>
+            }
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+}
+

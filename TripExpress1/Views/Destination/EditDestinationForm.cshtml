@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Add Destination";
+    Layout = "_AdminLayout";
+
+}
+
+
+@model Destination
+<div class="position-absolute top-50 start-50 translate-middle">
+    <br />
+    <h2>Edit Destination</h2>
+    <br />
+    <form asp-controller="Destination" asp-action="EditDestination" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <br /><label>Name</label><br />
+            <input class="form-control" name="nom" type="text" value="@Model.Nom" />
+        </div>
+
+        <div class="form-group">
+            <br /><label>Description</label><br />
+            <input class="form-control" name="description" type="text"  value="@Model.Description" />
+        </div>
+
+        <div class="form-group">
+            <br /> <label>Type</label><br />
+            <input class="form-control" name="type" type="text" value="@Model.Type" />
+        </div>
+        <div class="form-group">
+            <br /> <label>localisation</label><br />
+            <input class="form-control" name="localisation" type="text" value="@Model.localisation" />
+        </div>
+        <div class="form-group">
+            <br /> <label>Image</label><br />
+            <input id="img" class="form-control" name="img" type="file" value="@Model.Image" /><br />
+            <img height="100px" width="100px" id="previewImage" src="~/images/destinations/@Model.Image" />
+        </div>
+        <br /><br />
+        <tr>
+            <td><button type="submit" class="btn btn-primary">Register</button></td>
+            <td><button type="submit" class="btn btn-warning" asp-action="DestinationList">Cancel</button></td>
+        </tr>
+    </form>
+
+</div>
+
+<script>
+    const fileInput = document.getElementById('img');
+    const previewImage = document.getElementById('previewImage');
+
+    
+    fileInput.addEventListener('change', handleFileSelect);
+
+    function handleFileSelect(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                previewImage.src = reader.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
